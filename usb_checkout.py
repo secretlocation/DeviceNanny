@@ -465,6 +465,6 @@ if __name__ == "__main__":
     config.read('{}/config/DeviceNanny.ini'.format(working_dir))
     logging.config.fileConfig('{}/config/usb_logging.conf'.format(working_dir))
     logging.debug("[usb_checkout] STARTED")
-    timer = multiprocessing.Process(target=timeout, name="Timer", args=(30, ))
+    timer = multiprocessing.Process(target=timeout, name="Timer", args=(120, ))
     main()
     logging.info("[usb_checkout] FINISHED")

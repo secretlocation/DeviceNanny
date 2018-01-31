@@ -9,7 +9,12 @@ function timeRefresh(timeoutPeriod)
 
 function renew()
 {
-	var url="renew.php?userID="+document.getElementById("url").value;
+	if (document.getElementById("url").value!=""){
+		var url="renew.php?userID="+document.getElementById("url").value;
+	}
+	else {
+		var url="renew.php?userID="+document.getElementById("url2").value;
+	}
 	location.href=url;
 	return false;
 }
@@ -22,8 +27,16 @@ function users()
 </script>
 <title>Device Nanny</title>
 </head>
-<body onload="JavaScript:timeRefresh(60000);">
+<body onload="JavaScript:timeRefresh(15000);">
 <section>
+<h1> Device Nanny </h1>
+<form onSubmit="return renew();">
+<input type="text" name="userid" placeholder="User ID" id="url" maxlength="3" size="6"><input type="submit" class="button" value="Renew Checkout(s)">
+</form>
+<form onSubmit="return users();">
+<input type="button" class="button" value="I don't know my User ID" onclick="users();"/>
+</form>
+
 <p>
 <?php
 
@@ -33,10 +46,7 @@ $query  = "SELECT DeviceName, Manufacturer, Model, Type, OS, CheckedOutBy, UserI
 
 $response = @mysqli_query($dbc, $query);
 
-echo '<h1>Device Nanny</h1>';
-
 if($response){
-	
 	echo '<div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
 	<thead>
@@ -60,9 +70,9 @@ if($response){
 		
 		echo '<tr>';
 		if($row['Type']=='Phone')
-			echo "<td style='background-color: #916c00;'>".$row['Type']."</td>";
+			echo "<td style='background-color: #ffffff;'>".$row['Type']."</td>";
 		else
-			echo "<td style='background-color: #edc54d;'>".$row['Type']."</td>";
+			echo "<td style='background-color: #f2f2f2;'>".$row['Type']."</td>";
 		if($row['Manufacturer'] =='Apple')
 			echo "<td style='background-color: #007cb5;'>".$row['Manufacturer']."</td>";
 		else
@@ -77,7 +87,7 @@ if($response){
 		if($row['Location'] =='Omaha')
 			echo "<td style='background-color: #007cb5;'>".$row['Location']."</td>";
 		else
-			echo "<td align='left'; style='background-color: #4db9eb;'>".$row['Location']."</td>";
+			echo "<td align='left'; style='background-color: transparent;'>".$row['Location']."</td>";
 		if($row['fullname']!='- -')
 			echo "<td>".$row['fullname']."</td>";
 		else
@@ -102,7 +112,7 @@ mysqli_close($dbc)
 
 </p>
 <form onSubmit="return renew();">
-<input type="text" name="userid" placeholder="User ID" id="url" maxlength="3" size="6"><input type="submit" class="button" value="Renew Checkout(s)">
+<input type="text" name="userid" placeholder="User ID" id="url2" maxlength="3" size="6"><input type="submit" class="button" value="Renew Checkout(s)">
 </form>
 <form onSubmit="return users();">
 <input type="button" class="button" value="I don't know my User ID" onclick="users();"/>
